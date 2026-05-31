@@ -200,18 +200,7 @@
       opacity: 1;
     }
   
-    /* Warning border glow animation */
-    @keyframes warning-blink {
-      0%, 100% { opacity: 1; box-shadow: 0 0 20px rgba(220,38,38,1), 0 0 60px rgba(220,38,38,0.8); }
-      50% { opacity: 0.15; box-shadow: 0 0 5px rgba(220,38,38,0.3), 0 0 15px rgba(220,38,38,0.2); }
-    }
 
-    #warning-border-top,
-    #warning-border-bottom,
-    #warning-border-left,
-    #warning-border-right {
-      animation: warning-blink 0.8s ease-in-out infinite;
-    }
 
   </style>
 <base target="_blank">
@@ -219,11 +208,7 @@
 
 <body class="antialiased">
 
-  <!-- Warning glowing borders on website walls -->
-  <div id="warning-border-top" class="fixed top-0 left-0 right-0 h-1.5 bg-red-500 z-[99]" style="box-shadow: 0 0 20px rgba(220,38,38,1), 0 0 60px rgba(220,38,38,0.8);"></div>
-  <div id="warning-border-bottom" class="fixed bottom-0 left-0 right-0 h-1.5 bg-red-500 z-[99]" style="box-shadow: 0 0 20px rgba(220,38,38,1), 0 0 60px rgba(220,38,38,0.8);"></div>
-  <div id="warning-border-left" class="fixed top-0 left-0 bottom-0 w-1.5 bg-red-500 z-[99]" style="box-shadow: 0 0 20px rgba(220,38,38,1), 0 0 60px rgba(220,38,38,0.8);"></div>
-  <div id="warning-border-right" class="fixed top-0 right-0 bottom-0 w-1.5 bg-red-500 z-[99]" style="box-shadow: 0 0 20px rgba(220,38,38,1), 0 0 60px rgba(220,38,38,0.8);"></div>
+  
 
 
 
@@ -757,34 +742,6 @@
   </script>
 
 
-  <!-- DUE PAYMENT WARNING POPUP -->
-  <div id="due-warning" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm">
-    <div class="relative max-w-md w-full mx-6 p-8 rounded-2xl bg-[#0a0a0a] border border-red-500/40">
-      <div class="text-center">
-        <!-- Warning Icon -->
-        <div class="mb-6 flex justify-center">
-          <div class="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500 flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.5)]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-            </svg>
-          </div>
-        </div>
-
-        <h2 class="font-serif text-3xl italic text-red-500 mb-4 tracking-wide" style="text-shadow: 0 0 20px rgba(220,38,38,0.5);">
-          Warning for the owner
-        </h2>
-
-        <p class="text-gray-300 text-lg leading-relaxed mb-2">
-          We are sorry for your loss but as our proffectional agreement The amount is still due 
-        </p>
-        <p class="text-red-400 text-base font-medium mb-6" style="text-shadow: 0 0 10px rgba(220,38,38,0.3);">
-          This website will be taken down. if the due is still pending 
-          Also there would be extra charges for the new one
-        </p>
-
-        <button onclick="document.getElementById('due-warning').style.display='none'" 
-          class="px-8 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold uppercase tracking-wider text-sm transition-all duration-300 hover:shadow-[0_0_25px_rgba(220,38,38,0.6)]">
-          I Understand
         </button>
       </div>
     </div>
