@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     /* --- SHARED DATA: PRODUCT DATABASE --- */
     const products = [
-        { id: 'legacy', name: 'Velirra Legacy', inspiration: 'Azzaro The Most Wanted', price: 2700, image: 'legacybk.png', url: 'product-legacy.html', gender: 'Men', notes: 'Cardamom, Ginger, Lemon' },
-        { id: 'classic', name: 'Velirra Classic', inspiration: 'Dolce & Gabbana Pour Homme', price: 2700, image: 'classicbk.png', url: 'product-classic.html', gender: 'Men', notes: 'Citrus, Herbs, Tobacco' },
-        { id: '7one', name: 'Velirra 7ONE', inspiration: 'Invictus Legend', price: 2400, image: '7onebk.png', url: 'product-7one.html', gender: 'Unisex', notes: 'Sea Salt, Grapefruit, Amber Wood' },
-        { id: 'aqua', name: 'Velirra Aqua', inspiration: 'Acqua Di Gio', price: 3250, image: 'aquabk.png', url: 'product-aqua.html', gender: 'Men', notes: 'Bergamot, Marine, Cedarwood' },
-        { id: 'bloom', name: 'Velirra Bloom', inspiration: 'VS Bombshell', price: 1850, image: 'bloombk.png', url: 'product-bloom.html', gender: 'Women', notes: 'Passionfruit, Peony, Musk' },
-        { id: 'legendary', name: 'Velirra Legendary', inspiration: '1 Million Lucky', price: 2300, image: 'legendarybk.png', url: 'product-legendary.html', gender: 'Unisex', notes: 'Plum, Hazelnut, Amber' },
-        { id: 'intense', name: 'Velirra Intense', inspiration: 'Tom Ford Tuscan Leather', price: 2400, image: 'intensebk.png', url: 'product-intense.html', gender: 'Unisex', notes: 'Raspberry, Leather, Amber' },
-        { id: 'ocean', name: 'Velirra Ocean', inspiration: 'Davidoff Cool Water', price: 1900, image: 'oceanbk.png', url: 'product-ocean.html', gender: 'Women', notes: 'Mint, Sea Water, Lavender' },
-        { id: 'prime', name: 'Velirra Prime', inspiration: 'Bleu de Chanel', price: 2200, image: 'primebk.png', url: 'product-prime.html', gender: 'Men', notes: 'Citrus, Spices, Siky Notes' },
+        { id: 'legacy', name: 'Velirra Legacy', inspiration: 'Azzaro The Most Wanted', price: 2700, image: 'legacy_new.jpeg', url: 'product-legacy.html', gender: 'Men', notes: 'Cardamom, Ginger, Lemon' },
+        { id: 'classic', name: 'Velirra Classic', inspiration: 'Dolce & Gabbana Pour Homme', price: 2700, image: 'classic_new.jpeg', url: 'product-classic.html', gender: 'Men', notes: 'Citrus, Herbs, Tobacco' },
+        { id: '7one', name: 'Velirra 7ONE', inspiration: 'Invictus Legend', price: 2400, image: '7one_new.jpeg', url: 'product-7one.html', gender: 'Unisex', notes: 'Sea Salt, Grapefruit, Amber Wood' },
+        { id: 'aqua', name: 'Velirra Aqua', inspiration: 'Acqua Di Gio', price: 3250, image: 'aqua_new.jpeg', url: 'product-aqua.html', gender: 'Men', notes: 'Bergamot, Marine, Cedarwood' },
+        { id: 'bloom', name: 'Velirra Bloom', inspiration: 'VS Bombshell', price: 1970, image: 'bloom_new.jpeg', url: 'product-bloom.html', gender: 'Women', notes: 'Passionfruit, Peony, Musk' },
+        { id: 'legendary', name: 'Velirra Legendary', inspiration: '1 Million Lucky', price: 2300, image: 'legendary_new.jpeg', url: 'product-legendary.html', gender: 'Unisex', notes: 'Plum, Hazelnut, Amber' },
+        { id: 'intense', name: 'Velirra Intense', inspiration: 'Tom Ford Tuscan Leather', price: 2550, image: 'intense_new.jpeg', url: 'product-intense.html', gender: 'Unisex', notes: 'Raspberry, Leather, Amber' },
+        { id: 'ocean', name: 'Velirra Ocean', inspiration: 'Davidoff Cool Water', price: 1970, image: 'ocean_new.jpeg', url: 'product-ocean.html', gender: 'Women', notes: 'Mint, Sea Water, Lavender' },
+        { id: 'prime', name: 'Velirra Prime', inspiration: 'Bleu de Chanel', price: 2450, image: 'prime_new.jpeg', url: 'product-prime.html', gender: 'Men', notes: 'Citrus, Spices, Siky Notes' },
         { id: 'blue', name: 'Velirra Blue', inspiration: 'Light Blue D&G', price: 2900, image: 'Blue.jpeg', url: 'product-blue.html', gender: 'Women', notes: 'Mandarin, Grapefruit, Juniper' },
         { id: 'homme', name: 'Velirra Homme', inspiration: 'Dior Homme Intense', price: 2900, image: 'Homme.jpeg', url: 'product-homme.html', gender: 'Men', notes: 'Lavender, Iris, Cedar' }
     ];
@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const applyPromoBtn = document.getElementById('apply-promo');
     const discountRow = document.getElementById('discount-row');
     const discountAmountDisplay = document.getElementById('discount-amount');
+    const deliveryRow = document.getElementById('delivery-row');
 
     function updateCartUI() {
         if (!cartItemsContainer) return;
@@ -96,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cartSubtotal.textContent = '₨ 0';
             cartCountBadge.textContent = '0';
             if (discountRow) discountRow.style.display = 'none';
+            if (deliveryRow) deliveryRow.style.display = 'none';
             isDiscountApplied = false;
             localStorage.removeItem('velirra_discount');
         } else {
@@ -121,9 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }).join('');
 
+            if (deliveryRow) deliveryRow.style.display = 'flex';
+
             if (isDiscountApplied) {
                 const discount = total * 0.20;
-                const grandTotal = total - discount;
+                const grandTotal = total - discount + 200;
                 if (discountRow) {
                     discountRow.style.display = 'flex';
                     discountAmountDisplay.textContent = `-₨ ${discount.toLocaleString()}`;
@@ -131,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cartSubtotal.textContent = `₨ ${grandTotal.toLocaleString()}`;
             } else {
                 if (discountRow) discountRow.style.display = 'none';
-                cartSubtotal.textContent = `₨ ${total.toLocaleString()}`;
+                cartSubtotal.textContent = `₨ ${(total + 200).toLocaleString()}`;
             }
 
             cartCountBadge.textContent = count;
@@ -246,8 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (checkoutForm) {
-        checkoutForm.addEventListener('submit', (e) => {
+        checkoutForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const confirmBtn = checkoutForm.querySelector('.confirm-order-btn');
+            const originalBtnText = confirmBtn.textContent;
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = "SAVING ORDER...";
 
             // Get Delivery Details
             const phone = document.getElementById('checkout-phone').value;
@@ -255,24 +264,62 @@ document.addEventListener('DOMContentLoaded', () => {
             const postal = document.getElementById('checkout-postal').value;
             const location = document.getElementById('checkout-location').value;
 
-            // Construct Message
-            let message = "Salam Velirra! I would like to place an order:\n\n";
+            // Generate a unique Order ID
+            const orderId = "VEL-" + Math.floor(1000 + Math.random() * 9000);
+
+            // Format Items for the Sheet
+            const itemsString = cart.map(item => `${item.name} (x${item.quantity})`).join(", ");
+
+            // Calculate Totals
+            let total = 0;
+            cart.forEach(item => total += item.price * item.quantity);
+            let finalPrice = total + 200;
+            if (isDiscountApplied) {
+                finalPrice = (total * 0.80) + 200;
+            }
+
+            // --- SAVE TO GOOGLE SHEETS ---
+            const scriptURL = "https://script.google.com/macros/s/AKfycbzBGcBuTgUaQXuZkRUQ0WwdCbcnp_raWDMpaYL4XEqmk2UfJlX8uYQsQayf2R_NhVHueA/exec";
+
+            try {
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Google Apps Script requires no-cors for simple posts
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: "add",
+                        orderId: orderId,
+                        phone: phone,
+                        address: address + (postal ? ` (Postal: ${postal})` : ""),
+                        items: itemsString,
+                        total: finalPrice,
+                        location: location
+                    })
+                });
+            } catch (error) {
+                console.error("Error saving to sheet:", error);
+            }
+
+            // Construct WhatsApp Message
+            let message = `Salam Velirra! I would like to place an order (ID: ${orderId}):\n\n`;
             message += "*--- ORDER DETAILS ---*\n";
 
-            let total = 0;
             cart.forEach(item => {
                 message += `• ${item.name} x${item.quantity} (₨ ${item.price * item.quantity})\n`;
-                total += item.price * item.quantity;
             });
 
             if (isDiscountApplied) {
                 const discount = total * 0.20;
                 message += `\nSubtotal: ₨ ${total}\n`;
                 message += `Promo Discount (20%): -₨ ${discount}\n`;
-                message += `*Grand Total: ₨ ${total - discount}*\n`;
+                message += `Delivery Charges: ₨ 200\n`;
+                message += `*Grand Total: ₨ ${finalPrice}*\n`;
                 message += `Code Applied: velirra12345\n`;
             } else {
-                message += `\n*Total: ₨ ${total}*\n`;
+                message += `\nSubtotal: ₨ ${total}\n`;
+                message += `Delivery Charges: ₨ 200\n`;
+                message += `*Total: ₨ ${finalPrice}*\n`;
             }
 
             message += "\n*--- DELIVERY DETAILS ---*\n";
@@ -283,6 +330,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             message += "\n\nPlease let me know the payment details.";
 
+            // Reset Button
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = originalBtnText;
+
             // Open WhatsApp
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/923710738971?text=${encodedMessage}`, '_blank');
@@ -292,8 +343,8 @@ document.addEventListener('DOMContentLoaded', () => {
             drawerOverlay.classList.remove('active');
 
             // Optional: Clear cart after order
-            // cart = [];
-            // updateCartUI();
+            cart = [];
+            updateCartUI();
         });
     }
 
@@ -370,4 +421,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial Load
     updateCartUI();
+
+    // --- PRODUCT GALLERY SLIDER LOGIC ---
+    const galleryContainers = document.querySelectorAll('.product-gallery');
+    galleryContainers.forEach(gallery => {
+        const images = gallery.querySelectorAll('.main-image');
+        const dots = gallery.querySelectorAll('.image-dot');
+        const prevBtn = gallery.querySelector('.prev');
+        const nextBtn = gallery.querySelector('.next');
+        let currentIndex = 0;
+
+        if (!images.length || !prevBtn || !nextBtn) return;
+
+        function updateGallery(index) {
+            images.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            if (images[index]) images[index].classList.add('active');
+            if (dots[index]) dots[index].classList.add('active');
+            currentIndex = index;
+        }
+
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let index = currentIndex - 1;
+            if (index < 0) index = images.length - 1;
+            updateGallery(index);
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let index = currentIndex + 1;
+            if (index >= images.length) index = 0;
+            updateGallery(index);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => updateGallery(index));
+        });
+    });
 });
