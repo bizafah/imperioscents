@@ -1086,7 +1086,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 0;
 }
 
 .main-image img {
@@ -1213,45 +1213,9 @@ footer {
     position: relative;
 }
 
-.add-to-cart-btn::after,
-.checkout-btn::after,
-.confirm-order-btn::after {
-    content: "free delivery in Lahore \a 200 delivery charges for other cities";
-    white-space: pre;
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #333;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    width: max-content;
-    text-align: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    z-index: 1000;
-    pointer-events: none;
-    line-height: 1.6;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.add-to-cart-btn:hover::after,
-.checkout-btn:hover::after,
-.confirm-order-btn:hover::after {
-    opacity: 1;
-    visibility: visible;
-    bottom: 115%;
-}
-
 .add-to-cart-btn:hover {
-    background: #e74c3c;
+    background-color: #333;
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.2);
 }
 
 .product-tabs {
@@ -1664,6 +1628,122 @@ footer {
     }
 }
 
+/* --- DELIVERY POLICY SECTION --- */
+.delivery-policy {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.delivery-policy .section-title {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.policy-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.policy-content p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    color: #555;
+}
+
+.policy-content strong {
+    color: #000;
+}
+
+/* --- PRODUCT GALLERY SLIDER --- */
+.main-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.main-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.main-image.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.main-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.gallery-nav:hover {
+    background: #000;
+    color: #fff;
+}
+
+.gallery-nav.prev {
+    left: 15px;
+}
+
+.gallery-nav.next {
+    right: 15px;
+}
+
+.image-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.image-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.image-dot.active {
+    background: #000;
+    width: 20px;
+    border-radius: 4px;
+}
+
 /* HIGH PRIORITY MOBILE OVERRIDES */
 @media (max-width: 900px) {
     .container {
@@ -1813,5 +1893,61 @@ footer {
 @media (max-width: 480px) {
     .modal-content {
         padding: 30px 20px;
+    }
+}
+
+/* Premium Divider styles */
+.premium-divider {
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+.premium-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a962, transparent);
+    display: block;
+}
+
+.premium-label {
+    font-size: 2.5rem;
+    letter-spacing: 0.35rem;
+    color: #c9a962;
+    white-space: nowrap;
+    font-weight: 800;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .premium-label {
+        font-size: 1.4rem;
+        letter-spacing: 0.15rem;
+        white-space: normal;
+        font-weight: 800;
+        text-align: center;
+        color: #c9a962;
+        width: 100%;
+        display: block;
+    }
+
+    .premium-line {
+        display: none;
+    }
+
+    .premium-divider {
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+        justify-content: center;
+    }
+
+    .section-title {
+        font-size: 2rem !important;
+        margin-bottom: 30px !important;
     }
 }

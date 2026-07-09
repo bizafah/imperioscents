@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'legacy', name: 'Velirra Legacy', inspiration: 'Azzaro The Most Wanted', price: 2700, image: 'legacy_new.jpeg', url: 'product-legacy.html', gender: 'Men', notes: 'Cardamom, Ginger, Lemon' },
         { id: 'classic', name: 'Velirra Classic', inspiration: 'Dolce & Gabbana Pour Homme', price: 2700, image: 'classic_new.jpeg', url: 'product-classic.html', gender: 'Men', notes: 'Citrus, Herbs, Tobacco' },
         { id: '7one', name: 'Velirra 7ONE', inspiration: 'Invictus Legend', price: 2400, image: '7one_new.jpeg', url: 'product-7one.html', gender: 'Unisex', notes: 'Sea Salt, Grapefruit, Amber Wood' },
-        { id: 'aqua', name: 'Velirra Aqua', inspiration: 'Acqua Di Gio', price: 3250, image: 'aqua_new.jpeg', url: 'product-aqua.html', gender: 'Men', notes: 'Bergamot, Marine, Cedarwood' },
         { id: 'bloom', name: 'Velirra Bloom', inspiration: 'VS Bombshell', price: 1970, image: 'bloom_new.jpeg', url: 'product-bloom.html', gender: 'Women', notes: 'Passionfruit, Peony, Musk' },
         { id: 'legendary', name: 'Velirra Legendary', inspiration: '1 Million Lucky', price: 2300, image: 'legendary_new.jpeg', url: 'product-legendary.html', gender: 'Unisex', notes: 'Plum, Hazelnut, Amber' },
         { id: 'intense', name: 'Velirra Intense', inspiration: 'Tom Ford Tuscan Leather', price: 2550, image: 'intense_new.jpeg', url: 'product-intense.html', gender: 'Unisex', notes: 'Raspberry, Leather, Amber' },
         { id: 'ocean', name: 'Velirra Ocean', inspiration: 'Davidoff Cool Water', price: 1970, image: 'ocean_new.jpeg', url: 'product-ocean.html', gender: 'Women', notes: 'Mint, Sea Water, Lavender' },
         { id: 'prime', name: 'Velirra Prime', inspiration: 'Bleu de Chanel', price: 2450, image: 'prime_new.jpeg', url: 'product-prime.html', gender: 'Men', notes: 'Citrus, Spices, Siky Notes' },
         { id: 'blue', name: 'Velirra Blue', inspiration: 'Light Blue D&G', price: 2900, image: 'Blue.jpeg', url: 'product-blue.html', gender: 'Women', notes: 'Mandarin, Grapefruit, Juniper' },
-        { id: 'homme', name: 'Velirra Homme', inspiration: 'Dior Homme Intense', price: 2900, image: 'Homme.jpeg', url: 'product-homme.html', gender: 'Men', notes: 'Lavender, Iris, Cedar' }
+        { id: 'homme', name: 'Velirra Homme', inspiration: 'Dior Homme Intense', price: 2900, image: 'Homme.jpeg', url: 'product-homme.html', gender: 'Men', notes: 'Lavender, Iris, Cedar' },
+        { id: 'auraoud', name: 'Velirra Aura Oud', inspiration: 'Ameer Al Oud', price: 2980, image: 'Aura_OUD.jpeg', url: 'product-auraoud.html', gender: 'Unisex', notes: 'Wood Notes, Agarwood, Vanilla, Sugar, Sandalwood, Herbal Notes' }
     ];
 
     /* --- HERO SLIDER --- */
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const confirmBtn = checkoutForm.querySelector('.confirm-order-btn');
             const originalBtnText = confirmBtn.textContent;
             confirmBtn.disabled = true;
-            confirmBtn.textContent = "SAVING ORDER...";
+            confirmBtn.textContent = "CONFIRMING ORDER...";
 
             // Get Delivery Details
             const phone = document.getElementById('checkout-phone').value;
@@ -279,12 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // --- SAVE TO GOOGLE SHEETS ---
-            const scriptURL = "https://script.google.com/macros/s/AKfycbzBGcBuTgUaQXuZkRUQ0WwdCbcnp_raWDMpaYL4XEqmk2UfJlX8uYQsQayf2R_NhVHueA/exec";
+            const scriptURL = "https://script.google.com/macros/s/AKfycbyMHahmLNazVAyilskcZKf6Isit1TP6CEhpWlXiXxAMJiERCnETSmETh3ajFZSLCww5Rg/exec";
 
             try {
                 await fetch(scriptURL, {
                     method: 'POST',
-                    mode: 'no-cors', // Google Apps Script requires no-cors for simple posts
+                    mode: 'no-cors',
                     cache: 'no-cache',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -297,55 +297,56 @@ document.addEventListener('DOMContentLoaded', () => {
                         location: location
                     })
                 });
+
+                // Show Success Message
+                showOrderSuccess(orderId);
+
             } catch (error) {
                 console.error("Error saving to sheet:", error);
+                alert("Order submitted but there was a sync error. We will process it shortly.");
+            } finally {
+                // Reset Button
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = originalBtnText;
+
+                // Close modal and overlay
+                checkoutModal.classList.remove('active');
+
+                // Clear cart after order
+                cart = [];
+                isDiscountApplied = false;
+                localStorage.removeItem('velirra_cart');
+                localStorage.removeItem('velirra_discount');
+                updateCartUI();
             }
-
-            // Construct WhatsApp Message
-            let message = `Salam Velirra! I would like to place an order (ID: ${orderId}):\n\n`;
-            message += "*--- ORDER DETAILS ---*\n";
-
-            cart.forEach(item => {
-                message += `• ${item.name} x${item.quantity} (₨ ${item.price * item.quantity})\n`;
-            });
-
-            if (isDiscountApplied) {
-                const discount = total * 0.20;
-                message += `\nSubtotal: ₨ ${total}\n`;
-                message += `Promo Discount (20%): -₨ ${discount}\n`;
-                message += `Delivery Charges: ₨ 200\n`;
-                message += `*Grand Total: ₨ ${finalPrice}*\n`;
-                message += `Code Applied: velirra12345\n`;
-            } else {
-                message += `\nSubtotal: ₨ ${total}\n`;
-                message += `Delivery Charges: ₨ 200\n`;
-                message += `*Total: ₨ ${finalPrice}*\n`;
-            }
-
-            message += "\n*--- DELIVERY DETAILS ---*\n";
-            message += `📞 Phone: ${phone}\n`;
-            message += `📍 Address: ${address}\n`;
-            if (postal) message += `📮 Postal Code: ${postal}\n`;
-            if (location) message += `🗺️ Map Location: ${location}\n`;
-
-            message += "\n\nPlease let me know the payment details.";
-
-            // Reset Button
-            confirmBtn.disabled = false;
-            confirmBtn.textContent = originalBtnText;
-
-            // Open WhatsApp
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/923710738971?text=${encodedMessage}`, '_blank');
-
-            // Reset and Close
-            checkoutModal.classList.remove('active');
-            drawerOverlay.classList.remove('active');
-
-            // Optional: Clear cart after order
-            cart = [];
-            updateCartUI();
         });
+    }
+
+    function showOrderSuccess(orderId) {
+        // Create success modal dynamically if it doesn't exist
+        let successModal = document.getElementById('success-modal');
+        if (!successModal) {
+            successModal = document.createElement('div');
+            successModal.id = 'success-modal';
+            successModal.className = 'checkout-modal';
+            successModal.innerHTML = `
+                <div class="modal-content text-center" style="text-align: center;">
+                    <div style="font-size: 4rem; color: #2ecc71; margin-bottom: 20px;">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3 style="margin-bottom: 10px; letter-spacing: 2px;">ORDER PLACED!</h3>
+                    <p style="color: #666; margin-bottom: 25px;">Your order <b>#${orderId}</b> has been received successfully. We will contact you shortly for confirmation.</p>
+                    <button class="confirm-order-btn" onclick="document.getElementById('success-modal').classList.remove('active'); document.querySelector('.drawer-overlay').classList.remove('active');" style="background: #000; max-width: 200px; margin: 0 auto;">CONTINUE SHOPPING</button>
+                </div>
+            `;
+            document.body.appendChild(successModal);
+        } else {
+            successModal.querySelector('b').textContent = `#${orderId}`;
+        }
+
+        // Show it
+        successModal.classList.add('active');
+        document.querySelector('.drawer-overlay').classList.add('active');
     }
 
     /* --- QUANTITY SELECTOR (Shared) --- */

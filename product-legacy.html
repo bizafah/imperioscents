@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VELIRRA LEGACY | Premium Fragrance</title>
+    <meta name="facebook-domain-verification" content="di5mrlw0qw9v99vs75t76t54x1u62v" />
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +35,7 @@
 
 <body class="product-page">
     <div class="top-bar">
-        <p>🌙 EID SALE OFFER</p>
+        <p>🌙 SEASONAL SALE</p>
     </div>
 
     <header class="main-header">
@@ -93,11 +94,16 @@
                 <span>Discount (20%):</span>
                 <span id="discount-amount">-₨ 0</span>
             </div>
+            <div id="delivery-row"
+                style="display: none; justify-content: space-between; margin-bottom: 10px; font-weight: 600;">
+                <span>Delivery Charges:</span>
+                <span>₨ 200</span>
+            </div>
             <div class="cart-total">
-                <span>Subtotal:</span>
+                <span>Total:</span>
                 <span id="cart-subtotal">₨ 0</span>
             </div>
-            <button class="checkout-btn">CHECKOUT ON WHATSAPP</button>
+            <button class="checkout-btn">CHECKOUT</button>
         </div>
     </div>
     <!-- Checkout Details Modal -->
@@ -135,8 +141,23 @@
             <div class="product-detail-grid">
                 <!-- Image Section -->
                 <div class="product-gallery">
-                    <div class="main-image">
-                        <img src="legacybk.png" alt="VELIRRA Legacy">
+                    <div class="main-image-container">
+                        <div class="main-image active">
+                            <img src="legacy_new.jpeg" alt="VELIRRA Legacy">
+                        </div>
+                        <div class="main-image">
+                            <img src="box_front.jpeg" alt="Box Front">
+                        </div>
+                        <div class="main-image">
+                            <img src="box_back.jpeg" alt="Box Back">
+                        </div>
+                        <button class="gallery-nav prev"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="gallery-nav next"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="image-dots">
+                        <span class="image-dot active"></span>
+                        <span class="image-dot"></span>
+                        <span class="image-dot"></span>
                     </div>
                 </div>
 
@@ -202,7 +223,7 @@
 
                         <div class="tab-item">
                             <h3>THE EXPERIENCE</h3>
-                            <p>Velirra Legacy is more than just a fragrance — it is a statement of confidence and
+                            <p>Velirra Legacy is more than just a fragrance - it is a statement of confidence and
                                 sophistication. The warm spicy character combined with smooth woody undertones creates
                                 an irresistible scent trail that feels luxurious, masculine, and modern.</p>
                         </div>
